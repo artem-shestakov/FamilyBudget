@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
+from django.db import transaction
 from django.shortcuts import render, redirect
 from . import forms
-
+from budget.models import Wallet
 
 def register_view(request):
     # create form
@@ -13,9 +13,12 @@ def register_view(request):
     if request.method == 'POST':
         form = forms.UserSignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Account was created")
-            return redirect('login')
+            with transaction.atomic():
+                user = form.save()
+                wallet = Wallet(owner=user)
+                wallet.save()
+                messages.success(request, "Account was created")
+                return redirect('login')
 
     context = {
         'form': form

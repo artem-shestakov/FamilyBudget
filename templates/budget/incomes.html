@@ -1,8 +1,9 @@
+{% load static %}
 <style>
     .carousel-container {
         width: 1280px;
         margin: 50px auto;
-        min-height: 200px;
+        min-height: 100px;
         position: relative;
     }
     .carousel-container .inner {
@@ -14,9 +15,9 @@
         transition: transform 0.5s;
     }
     .carousel-container .card-container {
-        width: 259px;
+        width: 160px;
         flex-shrink: 0;
-        height: 250px;
+        height: 150px;
         padding-right: 15px;
         box-sizing: border-box;
     }
@@ -37,6 +38,14 @@
         align-items: center;
     }
     .income .total {
+        text-align: center;
+        flex-grow: 0;
+        flex-basis: 40px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .income .info {
+        text-align: center;
         flex-grow: 0;
         flex-basis: 40px;
         padding: 10px;
@@ -62,6 +71,12 @@
     .nav .next {
         right: -25px;
     }
+    .nav .next.hide {
+        visibility: hidden;
+    }
+    .nav .prev.show {
+        display: block;
+    }
 </style>
 
 <div class="carousel-container">
@@ -69,7 +84,9 @@
         <div class="track">
             <div class="card-container">
                 <div class="income">
-                    <div class="image">@</div>
+                    <div class="image">
+                        <img src="{% static 'icons/paid_black_24dp.svg' %}" alt="" width="100px">
+                    </div>
                     <div class="total">10 000</div>
                 </div>
             </div>
@@ -99,14 +116,10 @@
             </div>
             <div class="card-container">
                 <div class="income">
-                    <div class="image">@</div>
-                    <div class="total">60 000</div>
-                </div>
-            </div>
-            <div class="card-container">
-                <div class="income">
-                    <div class="image">@</div>
-                    <div class="total">70 000</div>
+                    <div class="image">
+                        <input type="image" src="{% static 'icons/add_circle_outline_black_24dp.svg' %}" width="100px">
+                    </div>
+                    <div class="info">Add</div>
                 </div>
             </div>
         </div>
@@ -132,7 +145,13 @@
     const track = document.querySelector('.track');
     
     let carouselWidth = document.querySelector('.carousel-container').offsetWidth;
-    
+
+    window.onload = function() {
+        if (track.offsetWidth - (index * carouselWidth) <= carouselWidth) {
+            next.classList.add('hide');
+        }
+    };
+
     window.addEventListener('resize', () => {
       carouselWidth = document.querySelector('.carousel-container').offsetWidth;
     })
@@ -151,7 +170,10 @@
     
     prev.addEventListener('click', () => {
       index--;
-      next.classList.remove('hide');
+      if (track.offsetWidth - (index * carouselWidth) <= carouselWidth) {
+        next.classList.remove('hide');
+        }
+      
       if (index === 0) {
         prev.classList.remove('show');
       }
