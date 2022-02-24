@@ -41,7 +41,14 @@
         text-align: center;
         flex-grow: 0;
         flex-basis: 40px;
-        padding: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+    .income .title {
+        text-align: center;
+        flex-grow: 0;
+        flex-basis: 40px;
+        padding: 0px;
         box-sizing: border-box;
     }
     .income .info {
@@ -79,45 +86,47 @@
     }
 </style>
 
+<!-- Modal -->
+<div class="modal fade" id="incomeAddModal" tabindex="-1" aria-labelledby="incomeAddModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create income</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="incomeTitle" class="form-label">Income title</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="incomeTitle" id="incomeTitle" aria-describedby="basic-addon3">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="createIncome" type="button" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Carousel -->
 <div class="carousel-container">
     <div class="carousel-inner">
         <div class="track">
+            {%for income in incomes %}
             <div class="card-container">
                 <div class="income">
                     <div class="image">
                         <img src="{% static 'icons/paid_black_24dp.svg' %}" alt="" width="100px">
                     </div>
-                    <div class="total">10 000</div>
+                    <div class="title">{{ income.title }}</div>
+                    <div class="total">{{ income.amount }}</div>
                 </div>
             </div>
-            <div class="card-container">
-                <div class="income">
-                    <div class="image">@</div>
-                    <div class="total">20 000</div>
-                </div>
-            </div>
-            <div class="card-container">
-                <div class="income">
-                    <div class="image">@</div>
-                    <div class="total">30 000</div>
-                </div>
-            </div>
-            <div class="card-container">
-                <div class="income">
-                    <div class="image">@</div>
-                    <div class="total">40 000</div>
-                </div>
-            </div>
-            <div class="card-container">
-                <div class="income">
-                    <div class="image">@</div>
-                    <div class="total">50 000</div>
-                </div>
-            </div>
+            {% endfor %}
             <div class="card-container">
                 <div class="income">
                     <div class="image">
-                        <input type="image" src="{% static 'icons/add_circle_outline_black_24dp.svg' %}" width="100px">
+                        <input type="image" src="{% static 'icons/add_circle_outline_black_24dp.svg' %}" width="100px" data-bs-toggle="modal" data-bs-target="#incomeAddModal">
                     </div>
                     <div class="info">Add</div>
                 </div>
@@ -138,7 +147,24 @@
     </div>
 </div>
 
+<!-- Scripts -->
 <script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     const prev  = document.querySelector('.prev');
     const next = document.querySelector('.next');
     
@@ -178,6 +204,26 @@
         prev.classList.remove('show');
       }
       track.style.transform = `translateX(-${index * carouselWidth}px)`;
+    })
+
+    $('#createIncome').click(function(){
+        const csrftoken = getCookie('csrftoken');
+        var incomeTitle = $('input[name="incomeTitle"]').val().trim();
+        console.log(incomeTitle);
+        data = {
+            'title': incomeTitle
+        };
+        $.ajax({
+            url: "{% url 'create_income' %}",
+            method: "POST",
+            headers: { 
+                'X-CSRFToken': csrftoken
+            },
+            data: data,
+            success: function(data) {
+                console.log(data)
+            }
+        })
     })
     
 
