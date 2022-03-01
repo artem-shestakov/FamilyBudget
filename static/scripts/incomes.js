@@ -1,7 +1,3 @@
-document.addEventListener('click', function (e) {
-    console.log(e.target);
-  });
-
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -17,6 +13,16 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+;(function(){
+  var incomeModal = new bootstrap.Modal(document.getElementById('incomeModal'))
+
+  htmx.on('htmx:afterSwap', (e) => {
+    if (e.detail.target.id === 'incomeAddDialog') {
+      incomeModal.show()
+    } 
+  })
+})()
 
 const prev  = document.querySelector('.prev');
 const next = document.querySelector('.next');
@@ -57,24 +63,4 @@ prev.addEventListener('click', () => {
     prev.classList.remove('show');
   }
   track.style.transform = `translateX(-${index * carouselWidth}px)`;
-})
-
-$('#createIncome').click(function(){
-    const csrftoken = getCookie('csrftoken');
-    var incomeTitle = $('input[name="incomeTitle"]').val().trim();
-    console.log(incomeTitle);
-    data = {
-        'title': incomeTitle
-    };
-    $.ajax({
-        url: "{% url 'create_income' %}",
-        method: "POST",
-        headers: { 
-            'X-CSRFToken': csrftoken
-        },
-        data: data,
-        success: function(data) {
-            console.log(data)
-        }
-    })
 })

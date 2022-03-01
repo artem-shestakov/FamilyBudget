@@ -1,24 +1,8 @@
 {% load static %}
 
 <!-- Modal -->
-<div class="modal fade" id="incomeAddModal" tabindex="-1" aria-labelledby="incomeAddModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create income</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label for="incomeTitle" class="form-label">Income title</label>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="incomeTitle" id="incomeTitle" aria-describedby="basic-addon3">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button id="createIncome" type="button" class="btn btn-primary">Create</button>
-            </div>
-        </div>
+<div class="modal fade" id="incomeModal" tabindex="-1" aria-labelledby="incomeAddModal" aria-hidden="true">
+    <div class="modal-dialog" id="incomeAddDialog">
     </div>
 </div>
 
@@ -40,7 +24,7 @@
             <div class="card-container">
                 <div class="income">
                     <div class="image">
-                        <input type="image" src="{% static 'icons/add_circle_outline_black_24dp.svg' %}" width="100px" data-bs-toggle="modal" data-bs-target="#incomeAddModal">
+                        <input type="image" src="{% static 'icons/add_circle_outline_black_24dp.svg' %}" width="100px" hx-get="{% url 'add_income' %}" hx-trigger="click" hx-target="#incomeAddDialog">
                     </div>
                     <div class="info">Add</div>
                 </div>
