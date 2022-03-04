@@ -6,9 +6,12 @@
 {% endblock %}
 
 {% block content %}
-{% include 'budget/income_list.html' %}
+<div class="incomes" hx-get="{% url 'incomes_list' %}" hx-trigger="load">
+    Loading...
+</div>
 {% endblock %}
 
 {% block scripts %}
+
 <script src="{% static 'scripts/incomes.js' %}"></script>
 {% endblock %}

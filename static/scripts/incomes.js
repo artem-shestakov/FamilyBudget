@@ -22,6 +22,12 @@ function getCookie(name) {
       incomeModal.show()
     } 
   })
+
+  htmx.on('htmx:beforeSwap', (e) => {
+    if (e.detail.target.id === 'incomeAddDialog' && !e.detail.xhr.response) {
+      incomeModal.hide()
+    } 
+  })
 })()
 
 const prev  = document.querySelector('.prev');
@@ -47,14 +53,16 @@ next.addEventListener('click', () => {
   index++;
   prev.classList.add('show');
   track.style.transform = `translateX(-${index * carouselWidth}px)`;
-  
-  if (track.offsetWidth - (index * carouselWidth) < carouselWidth) {
+  console.log(index, track.offsetWidth, carouselWidth)
+  if (track.offsetWidth - (index * carouselWidth) <= carouselWidth) {
     next.classList.add('hide');
   }
 })
 
 prev.addEventListener('click', () => {
-  index--;
+  if (index > 0) {
+    index--;
+  }
   if (track.offsetWidth - (index * carouselWidth) <= carouselWidth) {
     next.classList.remove('hide');
     }
