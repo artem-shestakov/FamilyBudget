@@ -2,7 +2,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="incomeModal" tabindex="-1" aria-labelledby="incomeAddModal" aria-hidden="true">
-    <div class="modal-dialog" id="incomeAddDialog">
+    <div class="modal-dialog" id="incomeAddDialog" hx-target="this">
     </div>
 </div>
 
@@ -14,7 +14,7 @@
             <div class="card-container">
                 <div class="income">
                     <div class="image">
-                        <img src="{% static 'icons/paid_black_24dp.svg' %}" alt="" width="100px">
+                        <input type="image" src="{% static 'icons/paid_black_24dp.svg' %}" width="100px" hx-get="{% url 'edit_income' id=income.pk %}" hx-trigger="click" hx-target="#incomeAddDialog">
                     </div>
                     <div class="title">{{ income.title }}</div>
                     <div class="total">{{ income.amount }}</div>
