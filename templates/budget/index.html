@@ -7,6 +7,7 @@
 
 {% block content %}
 
+{% include 'budget/toast.html' %}
 {% include 'budget/income_modal.html' %}
 <div class="incomes" hx-get="{% url 'incomes_list' %}" hx-trigger="load, incomeListChange from:body">
     <div class="text-center mt-3">
@@ -16,6 +17,6 @@
     </div>
 </div>
 {% endblock %}
-
 {% block scripts %}
+<script src="{% static 'scripts/toast.js' %}"></script>
 {% endblock %}

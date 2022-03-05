@@ -1,4 +1,4 @@
-from email import header
+import json
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponse
@@ -32,8 +32,12 @@ def add_income(request):
             income.save()
             return HttpResponse(
                 status=204,
-                headers={'HX-Trigger': 'incomeListChange'}
-            )
+                headers={
+                    'HX-Trigger': json.dumps({
+                        'incomeListChange': None,
+                        'showMessage': f'{income.title} added.'
+                    })
+                })
     else:
         form = IncomeForm()
     return render(request, 'budget/income_form.html', {
@@ -49,10 +53,15 @@ def edit_income(request, id):
             income.save()
             return HttpResponse(
                 status=204,
-                headers={'HX-Trigger': 'incomeListChange'}
-            )
+                headers={
+                    'HX-Trigger': json.dumps({
+                        'incomeListChange': None,
+                        'showMessage': f'{income.title} updated.'
+                    })
+                })
     else:
         form = IncomeForm(instance=income)
+    print(form.errors)
     return render(request, 'budget/income_form.html', {
         'form': form,
         'income': income
