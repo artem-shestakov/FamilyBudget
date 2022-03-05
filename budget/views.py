@@ -1,3 +1,4 @@
+from email import header
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponse
@@ -31,10 +32,11 @@ def add_income(request):
             income.save()
             return HttpResponse(
                 status=204,
+                headers={'HX-Trigger': 'incomeListChange'}
             )
     else:
         form = IncomeForm()
-    return render(request, 'budget/add_income.html', {
+    return render(request, 'budget/income_form.html', {
         'form': form
     })
 
@@ -47,10 +49,11 @@ def edit_income(request, id):
             income.save()
             return HttpResponse(
                 status=204,
+                headers={'HX-Trigger': 'incomeListChange'}
             )
     else:
         form = IncomeForm(instance=income)
-    return render(request, 'budget/add_income.html', {
+    return render(request, 'budget/income_form.html', {
         'form': form,
         'income': income
     })

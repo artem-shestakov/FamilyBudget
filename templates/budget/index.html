@@ -6,7 +6,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="incomes" hx-get="{% url 'incomes_list' %}" hx-trigger="load">
+
+{% include 'budget/income_modal.html' %}
+<div class="incomes" hx-get="{% url 'incomes_list' %}" hx-trigger="load, incomeListChange from:body">
     <div class="text-center mt-3">
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
