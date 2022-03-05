@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponse
@@ -17,7 +18,7 @@ def index(request):
 def incomes_list(request):
     user = request.user
     user_wallet = user.wallet
-    
+
     context = {'incomes': user_wallet.incomes_set.all()}
     return render(request, 'budget/income_list.html', context)
 
@@ -31,10 +32,15 @@ def add_income(request):
             income.save()
             return HttpResponse(
                 status=204,
-            )
+                headers={
+                    'HX-Trigger': json.dumps({
+                        'incomeListChange': None,
+                        'showMessage': f'{income.title} added.'
+                    })
+                })
     else:
         form = IncomeForm()
-    return render(request, 'budget/add_income.html', {
+    return render(request, 'budget/income_form.html', {
         'form': form
     })
 
@@ -47,10 +53,16 @@ def edit_income(request, id):
             income.save()
             return HttpResponse(
                 status=204,
-            )
+                headers={
+                    'HX-Trigger': json.dumps({
+                        'incomeListChange': None,
+                        'showMessage': f'{income.title} updated.'
+                    })
+                })
     else:
         form = IncomeForm(instance=income)
-    return render(request, 'budget/add_income.html', {
+    print(form.errors)
+    return render(request, 'budget/income_form.html', {
         'form': form,
         'income': income
     })

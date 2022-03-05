@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
-
-<!-- Modal -->
+{% with WIDGET_ERROR_CLASS='is-invalid' %}
+<!-- Modal Income -->
 <form hx-post="{{ request.path }}" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="modal-content">
     <div class="modal-header">
         {% if income %}
@@ -14,7 +14,7 @@
         <label for="{{ form.title.id_for_label }}" class="form-label">Income title</label>
         <div class="input-group mb-3">
             {% render_field form.title class="form-control" aria-describedby="basic-addon3" %}
-            <div class="invalid-feedback">{{ form.title.errors }}</div>
+            <div class="invalid-feedback">{{ form.title.errors|first }}</div>
         </div>
     </div>
     <div class="modal-footer">
@@ -22,3 +22,4 @@
         <button id="createIncome" type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
+{% endwith %}
