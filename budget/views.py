@@ -17,7 +17,7 @@ def index(request):
 def incomes_list(request):
     user = request.user
     user_wallet = user.wallet
-    
+
     context = {'incomes': user_wallet.incomes_set.all()}
     return render(request, 'budget/income_list.html', context)
 
