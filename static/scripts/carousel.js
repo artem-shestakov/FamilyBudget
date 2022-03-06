@@ -4,11 +4,11 @@ track = document.querySelector('.track');
 carouselWidth = document.querySelector('.carousel-container').offsetWidth;
 index = 0;
 
-window.onload = function() {
-    if (track.offsetWidth - (index * carouselWidth) <= carouselWidth) {
-        next.classList.add('hide');
-    }
-};
+(function() {
+  if (track.scrollWidth - (index * carouselWidth) <= carouselWidth) {
+      next.classList.add('hide');
+  }
+})()
 
 window.addEventListener('resize', () => {
   carouselWidth = document.querySelector('.carousel-container').offsetWidth;
