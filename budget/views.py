@@ -22,6 +22,7 @@ def incomes_list(request):
     context = {'incomes': user_wallet.incomes_set.all()}
     return render(request, 'budget/income_list.html', context)
 
+@login_required(login_url='login')
 @transaction.non_atomic_requests
 def add_income(request):
     if request.method == 'POST':
@@ -44,6 +45,7 @@ def add_income(request):
         'form': form
     })
 
+@login_required(login_url='login')
 @transaction.non_atomic_requests
 def edit_income(request, id):
     income = get_object_or_404(Incomes, pk=id)
@@ -66,3 +68,17 @@ def edit_income(request, id):
         'form': form,
         'income': income
     })
+
+@login_required(login_url='login')
+@transaction.non_atomic_requests
+def delete_income(request, id):
+    income = get_object_or_404(Incomes, pk=id)
+    income.delete()
+    return HttpResponse(
+        status=204,
+        headers={
+            'HX-Trigger': json.dumps({
+                "incomeListChange": None,
+                "showMessage": f"Income {income.title} deleted."
+            })
+        })
