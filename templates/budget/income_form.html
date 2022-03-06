@@ -18,8 +18,15 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button id="createIncome" type="submit" class="btn btn-primary">Save</button>
+        <div class="start-0">
+            {% if income %}
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" hx-delete="{% url 'delete_income' id=income.pk %}">Delete</button>
+            {% endif %}
+        </div>
+        <div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button id="createIncome" type="submit" class="btn btn-primary">Save</button>
+        </div>
     </div>
 </form>
 {% endwith %}
