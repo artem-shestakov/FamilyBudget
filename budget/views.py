@@ -82,3 +82,12 @@ def delete_income(request, id):
                 "showMessage": f"Income {income.title} deleted."
             })
         })
+
+# Savings
+@login_required(login_url='login')
+def savings_list(request):
+    user = request.user
+    user_wallet = user.wallet
+
+    context = {'savings': user_wallet.savings_set.all()}
+    return render(request, 'budget/saving_list.html', context)

@@ -1,3 +1,14 @@
 .modal-footer {
     justify-content: space-between !important;
 }
+
+div.image {
+    cursor: pointer;
+}
+
+.saving {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
