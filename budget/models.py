@@ -43,10 +43,19 @@ class Incomes(models.Model):
         return str(self.wallet)+'-'+str(self.title)
 
 class Savings(models.Model):
+    wallet = models.ForeignKey(
+        Wallet,
+        null=False,
+        blank=False,
+        on_delete=models.PROTECT
+    )
     title = models.CharField(max_length=250, blank=False)
     amount = models.FloatField()
-    created_at = models.DateField()
+    created_at = models.DateField(default=timezone.now)
     is_active = models.BooleanField(default=True)
+
+    def __str__(self) -> str:
+        return str(self.wallet)+'-'+str(self.title)
 
 class Costs(models.Model):
     title = models.CharField(max_length=250, blank=False)

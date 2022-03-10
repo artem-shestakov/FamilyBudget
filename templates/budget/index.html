@@ -9,12 +9,22 @@
 
 {% include 'budget/toast.html' %}
 {% include 'budget/income_modal.html' %}
+<!-- Incomes block -->
 <div class="incomes" hx-get="{% url 'incomes_list' %}" hx-trigger="load, incomeListChange from:body">
     <div class="text-center mt-3">
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
     </div>
+</div>
+
+<!-- Savings block -->
+<div class="savings" hx-get="{% url 'savings_list' %}" hx-trigger="load">
+  <div class="text-center mt-3">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+  </div>
 </div>
 {% endblock %}
 {% block scripts %}

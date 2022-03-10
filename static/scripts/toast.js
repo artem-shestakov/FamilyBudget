@@ -27,8 +27,6 @@ function showToasts() {
         let clone = toastEl.cloneNode( true );
         clone.setAttribute( 'id', 'toast' );
         toastList.appendChild(clone)
-
-        // toast.show()
         showToasts()
     })
 })()
