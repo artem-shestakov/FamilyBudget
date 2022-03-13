@@ -1,17 +1,17 @@
 {% load widget_tweaks %}
 {% with WIDGET_ERROR_CLASS='is-invalid' %}
-<!-- Modal Income -->
+<!-- Modal source -->
 <form hx-post="{{ request.path }}" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="modal-content">
     <div class="modal-header">
-        {% if income %}
-        <h5 class="modal-title" id="exampleModalLabel">Update income</h5>
+        {% if source %}
+        <h5 class="modal-title" id="exampleModalLabel">Update source</h5>
         {% else %}
-        <h5 class="modal-title" id="exampleModalLabel">Create income</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Create source</h5>
         {% endif %}
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-        <label for="{{ form.title.id_for_label }}" class="form-label">Income title</label>
+        <label for="{{ form.title.id_for_label }}" class="form-label">Source title</label>
         <div class="input-group mb-3">
             {% render_field form.title class="form-control" aria-describedby="basic-addon3" %}
             <div class="invalid-feedback">{{ form.title.errors|first }}</div>
@@ -19,13 +19,13 @@
     </div>
     <div class="modal-footer">
         <div class="start-0">
-            {% if income %}
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" hx-delete="{% url 'delete_income' id=income.pk %}">Delete</button>
+            {% if source %}
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" hx-delete="{% url 'delete_source' id=source.pk %}">Delete</button>
             {% endif %}
         </div>
         <div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button id="createIncome" type="submit" class="btn btn-primary">Save</button>
+            <button id="createSource" type="submit" class="btn btn-primary">Save</button>
         </div>
     </div>
 </form>

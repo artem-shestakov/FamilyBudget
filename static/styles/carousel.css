@@ -1,5 +1,5 @@
 .carousel-container {
-    width: 1280px;
+    width: 900px;
     margin: 50px auto;
     min-height: 100px;
     position: relative;
@@ -13,13 +13,13 @@
     transition: transform 0.5s;
 }
 .carousel-container .card-container {
-    width: 160px;
+    width: 150px;
     flex-shrink: 0;
     height: 150px;
     padding-right: 15px;
     box-sizing: border-box;
 }
-.carousel-container .card-container .income {
+.carousel-container .card-container .source {
     display: flex;
     flex-direction: column;
     width: 100%;

@@ -5,11 +5,11 @@ urlpatterns = [
     # Index
     path('', views.index, name='index'),
     
-    # Incomes
-    path('incomes/', views.incomes_list, name='incomes_list'),
-    path('income/add', views.add_income, name='add_income'),
-    path('income/<int:id>/edit', views.edit_income, name='edit_income'),
-    path('income/<int:id>/delete', views.delete_income, name='delete_income'),
+    # Sources
+    path('sources/', views.sources_list, name='sources_list'),
+    path('source/add', views.add_source, name='add_source'),
+    path('source/<int:id>/edit', views.edit_source, name='edit_source'),
+    path('source/<int:id>/delete', views.delete_source, name='delete_source'),
 
     # Savings
     path('savings/', views.savings_list, name='savings_list'),

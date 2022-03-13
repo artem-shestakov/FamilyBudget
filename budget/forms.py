@@ -1,12 +1,10 @@
-from dataclasses import fields
-from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 
-from .models import Incomes, Savings
+from .models import Sources, Savings
 
-class IncomeForm(ModelForm):
+class SourceForm(ModelForm):
     class Meta:
-        model = Incomes
+        model = Sources
         fields = ['title']
 
 class SavingForm(ModelForm):

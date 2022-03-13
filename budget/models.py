@@ -1,3 +1,4 @@
+from pyexpat import model
 from turtle import title
 from django.utils import timezone
 from django.db import models
@@ -19,11 +20,21 @@ class Wallet(models.Model):
         blank=True,
         null=True
     )
+    balance = models.FloatField(
+        default=0,
+        null=False,
+        blank=False
+    )
+    expenses = models.FloatField(
+        default=0,
+        null=False,
+        blank=False
+    )
 
     def __str__(self) -> str:
         return self.owner.email
 
-class Incomes(models.Model):
+class  Sources(models.Model):
     wallet = models.ForeignKey(
         Wallet,
         null=False,
@@ -61,5 +72,5 @@ class Costs(models.Model):
     title = models.CharField(max_length=250, blank=False)
     amount = models.FloatField()
     limit = models.FloatField()
-    created_ad = models.DateField()
+    created_at = models.DateField()
     is_active = models.BooleanField(default=True)
