@@ -3,12 +3,14 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'styles/incomes.css' %}">
+<link rel="stylesheet" href="{% static 'styles/savings.css' %}">
 {% endblock %}
 
 {% block content %}
 
 {% include 'budget/toast.html' %}
 {% include 'budget/income_modal.html' %}
+{% include 'budget/saving_modal.html' %}
 <!-- Incomes block -->
 <div class="incomes" hx-get="{% url 'incomes_list' %}" hx-trigger="load, incomeListChange from:body">
     <div class="text-center mt-3">
@@ -19,7 +21,7 @@
 </div>
 
 <!-- Savings block -->
-<div class="savings" hx-get="{% url 'savings_list' %}" hx-trigger="load">
+<div class="savings" hx-get="{% url 'savings_list' %}" hx-trigger="load, savingListChange from:body">
   <div class="text-center mt-3">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
