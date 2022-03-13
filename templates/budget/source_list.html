@@ -8,7 +8,7 @@
             <div class="card-container">
                 <div class="source">
                     <div class="image">
-                        <input type="image" src="{% static 'icons/paid_black_24dp.svg' %}" width="100px" hx-get="{% url 'edit_source' id=source.pk %}" hx-trigger="click" hx-target="#sourceAddDialog">
+                        <img src="{% static 'icons/paid_black_24dp.svg' %}" alt="{{ source.title }}" width="100px" hx-get="{% url 'edit_source' id=source.pk %}" hx-trigger="click" hx-target="#sourceAddDialog">
                     </div>
                     <div class="title">{{ source.title }}</div>
                     <div class="total">{{ source.amount }}</div>
@@ -17,8 +17,8 @@
             {% endfor %}
             <div class="card-container">
                 <div class="source">
-                    <div class="image">
-                        <input type="image" src="{% static 'icons/add_circle_outline_black_24dp.svg' %}" width="100px" hx-get="{% url 'add_source' %}" hx-trigger="click" hx-target="#sourceAddDialog">
+                    <div class="image add">
+                        <img src="{% static 'icons/add_circle_outline_black_24dp.svg' %}" alt="Add" width="100px" hx-get="{% url 'add_source' %}" hx-trigger="click" hx-target="#sourceAddDialog">
                     </div>
                     <div class="info">Add</div>
                 </div>
