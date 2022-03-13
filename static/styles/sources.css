@@ -50,6 +50,10 @@
 .nav .next.hide {
     visibility: hidden;
 }
+.nav .prev.hide {
+    visibility: hidden;
+}
+
 .nav .prev.show {
     display: block;
 }

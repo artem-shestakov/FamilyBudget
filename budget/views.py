@@ -15,6 +15,13 @@ def index(request):
     context = {}
     return render(request, 'budget/index.html', context)
 
+def wallet(request):
+    wallet = request.user.wallet
+    context = {
+        'wallet': wallet
+    }
+    return render(request, 'budget/wallet.html', context)
+
 @login_required(login_url='login')
 def sources_list(request):
     user = request.user

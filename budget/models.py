@@ -1,3 +1,4 @@
+from pyexpat import model
 from turtle import title
 from django.utils import timezone
 from django.db import models
@@ -18,6 +19,16 @@ class Wallet(models.Model):
         related_name='wallet',
         blank=True,
         null=True
+    )
+    balance = models.FloatField(
+        default=0,
+        null=False,
+        blank=False
+    )
+    expenses = models.FloatField(
+        default=0,
+        null=False,
+        blank=False
     )
 
     def __str__(self) -> str:
