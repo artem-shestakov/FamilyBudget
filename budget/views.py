@@ -4,10 +4,10 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
-from budget.admin import IncomesAdmin
+from budget.admin import SourcesAdmin
 
-from .models import Incomes, Savings
-from .forms import IncomeForm, SavingForm
+from .models import Sources, Savings
+from .forms import SourceForm, SavingForm
 
 # Index
 @login_required(login_url='login')
@@ -16,71 +16,72 @@ def index(request):
     return render(request, 'budget/index.html', context)
 
 @login_required(login_url='login')
-def incomes_list(request):
+def sources_list(request):
     user = request.user
     user_wallet = user.wallet
 
-    context = {'incomes': user_wallet.incomes_set.all()}
-    return render(request, 'budget/income_list.html', context)
+    context = {'sources': user_wallet.sources_set.all()}
+    return render(request, 'budget/source_list.html', context)
 
-# Incomes
+# Sources
 @login_required(login_url='login')
 @transaction.non_atomic_requests
-def add_income(request):
+def add_source(request):
     if request.method == 'POST':
-        form = IncomeForm(request.POST)
+        form = SourceForm(request.POST)
         if form.is_valid():
-            income = form.save(commit=False)
-            income.wallet = request.user.wallet
-            income.save()
+            source = form.save(commit=False)
+            source.wallet = request.user.wallet
+            source.save()
             return HttpResponse(
                 status=204,
                 headers={
                     'HX-Trigger': json.dumps({
-                        'incomeListChange': None,
-                        'showMessage': f'Income {income.title} added.'
+                        'sourceListChange': None,
+                        'showMessage': f'Source {source.title} added.'
                     })
                 })
     else:
-        form = IncomeForm()
-    return render(request, 'budget/income_form.html', {
+        form = SourceForm()
+    return render(request, 'budget/source_form.html', {
         'form': form
     })
 
 @login_required(login_url='login')
 @transaction.non_atomic_requests
-def edit_income(request, id):
-    income = get_object_or_404(Incomes, pk=id)
+def edit_source(request, id):
+    source = get_object_or_404(Sources, pk=id)
+    old_title = source.title
     if request.method == 'POST':
-        form = IncomeForm(request.POST, instance=income)
+        form = SourceForm(request.POST, instance=source)
         if form.is_valid():
-            income.save()
+            source.save()
             return HttpResponse(
                 status=204,
                 headers={
                     'HX-Trigger': json.dumps({
-                        'incomeListChange': None,
-                        'showMessage': f'Income {income.title} updated.'
+                        'sourceListChange': None,
+                        'showMessage': f'Source {old_title} updated.'
                     })
                 })
     else:
-        form = IncomeForm(instance=income)
-    return render(request, 'budget/income_form.html', {
+        form = SourceForm(instance=source)
+    return render(request, 'budget/source_form.html', {
         'form': form,
-        'income': income
+        'source': source
     })
 
 @login_required(login_url='login')
 @transaction.non_atomic_requests
-def delete_income(request, id):
-    income = get_object_or_404(Incomes, pk=id)
-    income.delete()
+def delete_source(request, id):
+    source = get_object_or_404(Sources, pk=id)
+    source.delete()
     return HttpResponse(
         status=204,
         headers={
             'HX-Trigger': json.dumps({
-                "incomeListChange": None,
-                "showMessage": f"Income {income.title} deleted."
+                "sourceListChange": None,
+                "showMessage": f"Source {source.title} deleted."
             })
         })
 

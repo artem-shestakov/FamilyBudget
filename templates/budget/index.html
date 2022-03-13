@@ -2,17 +2,17 @@
 {% load static %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'styles/incomes.css' %}">
+<link rel="stylesheet" href="{% static 'styles/sources.css' %}">
 <link rel="stylesheet" href="{% static 'styles/savings.css' %}">
 {% endblock %}
 
 {% block content %}
 
 {% include 'budget/toast.html' %}
-{% include 'budget/income_modal.html' %}
+{% include 'budget/source_modal.html' %}
 {% include 'budget/saving_modal.html' %}
-<!-- Incomes block -->
-<div class="incomes" hx-get="{% url 'incomes_list' %}" hx-trigger="load, incomeListChange from:body">
+<!-- Sources block -->
+<div class="sources" hx-get="{% url 'sources_list' %}" hx-trigger="load, sourceListChange from:body">
     <div class="text-center mt-3">
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>

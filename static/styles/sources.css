@@ -1,26 +1,26 @@
-.income > * {
+.source > * {
     flex: 1;
 }
-.income .image {
+.source .image {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.income .total {
+.source .total {
     text-align: center;
     flex-grow: 0;
     flex-basis: 40px;
     padding: 0px;
     box-sizing: border-box;
 }
-.income .title {
+.source .title {
     text-align: center;
     flex-grow: 0;
     flex-basis: 40px;
     padding: 0px;
     box-sizing: border-box;
 }
-.income .info {
+.source .info {
     text-align: center;
     flex-grow: 0;
     flex-basis: 40px;

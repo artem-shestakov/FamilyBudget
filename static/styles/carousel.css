@@ -19,7 +19,7 @@
     padding-right: 15px;
     box-sizing: border-box;
 }
-.carousel-container .card-container .income {
+.carousel-container .card-container .source {
     display: flex;
     flex-direction: column;
     width: 100%;

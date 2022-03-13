@@ -23,7 +23,7 @@ class Wallet(models.Model):
     def __str__(self) -> str:
         return self.owner.email
 
-class Incomes(models.Model):
+class  Sources(models.Model):
     wallet = models.ForeignKey(
         Wallet,
         null=False,
@@ -61,5 +61,5 @@ class Costs(models.Model):
     title = models.CharField(max_length=250, blank=False)
     amount = models.FloatField()
     limit = models.FloatField()
-    created_ad = models.DateField()
+    created_at = models.DateField()
     is_active = models.BooleanField(default=True)
