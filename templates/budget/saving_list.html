@@ -8,7 +8,7 @@
             <div class="card-container">
                 <div class="saving">
                     <div class="image">
-                        <input type="image" src="{% static 'icons/paid_black_24dp.svg' %}" width="100px" hx-get="" hx-trigger="" hx-target="">
+                        <img src="{% static 'icons/account_balance_wallet_black_24dp.svg' %}" alt="{{ saving.title }}" width="100px" hx-get="{% url 'edit_saving' id=saving.pk %}" hx-trigger="click" hx-target="#savingAddDialog">
                     </div>
                     <div class="title">{{ saving.title }}</div>
                     <div class="total">{{ saving.amount }}</div>
@@ -17,8 +17,8 @@
             {% endfor %}
             <div class="card-container">
                 <div class="saving">
-                    <div class="image">
-                        <img src="{% static 'icons/add_circle_outline_black_24dp.svg' %}" alt="Add" width="100px">
+                    <div class="image add">
+                        <img src="{% static 'icons/add_circle_outline_black_24dp.svg' %}" alt="Add" width="100px" hx-get="{% url 'add_saving' %}" hx-trigger="click" hx-target="#savingAddDialog">
                     </div>
                     <div class="info">Add</div>
                 </div>
@@ -39,3 +39,4 @@
     </div>
 </div>
 <!-- End Carousel -->
+<script src="{% static 'scripts/savings.js' %}"></script>

@@ -6,9 +6,10 @@ from django.shortcuts import render, get_object_or_404
 
 from budget.admin import IncomesAdmin
 
-from .models import Incomes
-from .forms import IncomeForm
+from .models import Incomes, Savings
+from .forms import IncomeForm, SavingForm
 
+# Index
 @login_required(login_url='login')
 def index(request):
     context = {}
@@ -22,6 +23,7 @@ def incomes_list(request):
     context = {'incomes': user_wallet.incomes_set.all()}
     return render(request, 'budget/income_list.html', context)
 
+# Incomes
 @login_required(login_url='login')
 @transaction.non_atomic_requests
 def add_income(request):
@@ -36,7 +38,7 @@ def add_income(request):
                 headers={
                     'HX-Trigger': json.dumps({
                         'incomeListChange': None,
-                        'showMessage': f'{income.title} added.'
+                        'showMessage': f'Income {income.title} added.'
                     })
                 })
     else:
@@ -58,12 +60,11 @@ def edit_income(request, id):
                 headers={
                     'HX-Trigger': json.dumps({
                         'incomeListChange': None,
-                        'showMessage': f'{income.title} updated.'
+                        'showMessage': f'Income {income.title} updated.'
                     })
                 })
     else:
         form = IncomeForm(instance=income)
-    print(form.errors)
     return render(request, 'budget/income_form.html', {
         'form': form,
         'income': income
@@ -91,3 +92,64 @@ def savings_list(request):
 
     context = {'savings': user_wallet.savings_set.all()}
     return render(request, 'budget/saving_list.html', context)
+
+@login_required(login_url='login')
+@transaction.non_atomic_requests
+def add_saving(request):
+    if request.method == 'POST':
+        form = SavingForm(request.POST)
+        if form.is_valid():
+            saving = form.save(commit=False)
+            saving.wallet = request.user.wallet
+            saving.save()
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        'savingListChange': None,
+                        'showMessage': f'Saving {saving.title} added.'
+                    })
+                })
+    else:
+        form = SavingForm()
+    return render(request, 'budget/saving_form.html', {
+        'form': form
+    })
+
+@login_required(login_url='login')
+@transaction.non_atomic_requests
+def edit_saving(request, id):
+    saving = get_object_or_404(Savings, pk=id)
+    current_title = saving.title
+    if request.method == 'POST':
+        form = SavingForm(request.POST, instance=saving)
+        if form.is_valid():
+            saving.save()
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        'savingListChange': None,
+                        'showMessage': f'Saving {current_title} was updated.'
+                    })
+                })
+    else:
+        form = IncomeForm(instance=saving)
+    return render(request, 'budget/saving_form.html', {
+        'form': form,
+        'saving': saving
+    })
+
+@login_required(login_url='login')
+@transaction.non_atomic_requests
+def delete_saving(request, id):
+    saving = get_object_or_404(Savings, pk=id)
+    saving.delete()
+    return HttpResponse(
+        status=204,
+        headers={
+            'HX-Trigger': json.dumps({
+                "savingListChange": None,
+                "showMessage": f"Saving {saving.title} was deleted."
+            })
+        })

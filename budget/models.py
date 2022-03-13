@@ -50,7 +50,7 @@ class Savings(models.Model):
         on_delete=models.PROTECT
     )
     title = models.CharField(max_length=250, blank=False)
-    amount = models.FloatField()
+    amount = models.FloatField(default=0)
     created_at = models.DateField(default=timezone.now)
     is_active = models.BooleanField(default=True)
 

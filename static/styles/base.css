@@ -3,12 +3,8 @@
 }
 
 div.image {
-    cursor: pointer;
+    cursor: move;
 }
-
-.saving {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+div.image.add {
+    cursor: pointer;
 }
