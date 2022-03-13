@@ -30,11 +30,8 @@ prev.addEventListener('click', () => {
     index--;
   }
   
-  if (track.scrollWidth - (index * carouselWidth) <= carouselWidth && index !== 0) {
+  if (track.scrollWidth - (index * carouselWidth) <= carouselWidth) {
     next.classList.remove('hide');
-  } else {
-    next.classList.remove('hide');
-    next.classList.add('show');
   }
   
   if (index === 0) {
