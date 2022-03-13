@@ -134,7 +134,7 @@ def edit_saving(request, id):
                     })
                 })
     else:
-        form = IncomeForm(instance=saving)
+        form = SavingForm(instance=saving)
     return render(request, 'budget/saving_form.html', {
         'form': form,
         'saving': saving

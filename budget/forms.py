@@ -14,5 +14,5 @@ class SavingForm(ModelForm):
         model = Savings
         fields = [
             'title',
-            
+            'amount',
         ]
