@@ -17,7 +17,7 @@ function sourceDragging() {
     })
 }
 
-function savingDroping() {
+function savingDragDrop() {
     const savings = document.querySelectorAll('.image.saving')
     
     savings.forEach(saving => {
@@ -27,6 +27,15 @@ function savingDroping() {
         saving.addEventListener('dragend', () => {
             saving.classList.remove('dragging')
         })
+
+        saving.addEventListener('dragover', (e) => {
+            e.preventDefault()
+            // console.log(document.querySelector(".dragging"))
+        })
+        saving.addEventListener('drop', (e) => {
+            e.preventDefault()
+            console.log(saving)
+        })
     })
 }
 
@@ -35,7 +44,7 @@ function savingDroping() {
         if (e.detail.target.id === 'sources') {
             sourceDragging()
         } else if (e.detail.target.id === 'savings') {
-            savingDroping()
+            savingDragDrop()
         }
       })    
 })()
