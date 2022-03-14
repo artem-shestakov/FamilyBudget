@@ -2,6 +2,7 @@
   var savingModal = new bootstrap.Modal(document.getElementById('savingModal'))
 
   htmx.on('htmx:afterSwap', (e) => {
+    console.log('1')
     if (e.detail.target.id === 'savingAddDialog') {
       savingModal.show()
     } 

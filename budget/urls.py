@@ -14,6 +14,7 @@ urlpatterns = [
     # Savings
     path('savings/', views.savings_list, name='savings_list'),
     path('saving/<int:id>', views.get_saving, name='get_saving'),
+    path('saving/<int:id>/detail', views.get_saving_detail, name='get_saving_detail'),
     path('saving/add', views.add_saving, name='add_saving'),
     path('saving/<int:id>/edit', views.edit_saving, name='edit_saving'),
     path('saving/<int:id>/delete', views.delete_saving, name='delete_saving'),
