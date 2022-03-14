@@ -111,6 +111,14 @@ def get_saving(request, id):
 
 @login_required(login_url='login')
 @transaction.non_atomic_requests
+def get_saving_detail(request, id):
+    saving = get_object_or_404(Saving, pk=id)
+    return render(request, 'budget/saving_detail.html', {
+        'saving': saving
+    })
+
+@login_required(login_url='login')
+@transaction.non_atomic_requests
 def add_saving(request):
     if request.method == 'POST':
         form = SavingForm(request.POST)
@@ -145,7 +153,7 @@ def edit_saving(request, id):
                 status=204,
                 headers={
                     'HX-Trigger': json.dumps({
-                        'savingListChange': None,
+                        'savingChange': None,
                         'showMessage': f'Saving {current_title} was updated.'
                     })
                 })

@@ -1,0 +1,19 @@
+    <div class="col">
+        <div class="d-flex justify-content-between">
+            <div class="title">
+                <h2><b>{{ saving.title }}</b></h2>
+            </div>
+            <div class="saving balance">
+                <h2><i>{{ saving.amount }}</i></h2>
+            </div>
+        </div>   
+    </div>
+    <div class="col">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-secondary" hx-get="{% url 'edit_saving' id=saving.pk %}" hx-trigger="click" hx-target="#savingAddDialog">
+                <span class="material-icons">
+                    settings
+                </span>
+            </button>
+        </div>
+    </div>

@@ -8,24 +8,27 @@
 
 {% block content %}
 
-{% include 'budget/toast.html' %}
 {% include 'budget/source_modal.html' %}
-{% include 'budget/saving_modal.html' %}
+{% comment %} {% include 'budget/saving_modal.html' %} {% endcomment %}
 <!-- Sources block -->
-<div class="sources" id="sources" hx-get="{% url 'sources_list' %}" hx-trigger="load, sourceListChange from:body">
-  <div class="text-center mt-3">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+<div class="shadow p-3 mb-3 mt-3 bg-body rounded">
+  <div class="sources" id="sources" hx-get="{% url 'sources_list' %}" hx-trigger="load, sourceListChange from:body">
+    <div class="text-center mt-3">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
   </div>
 </div>
 
 <!-- Savings block -->
-<div class="savings" id="savings" hx-get="{% url 'savings_list' %}" hx-trigger="load, savingListChange from:body">
-  <div class="text-center mt-3">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+<div class="shadow p-3 mb-3 mt-3 bg-body rounded">
+  <div class="savings" id="savings" hx-get="{% url 'savings_list' %}" hx-trigger="load, savingListChange from:body">
+    <div class="text-center mt-3">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
   </div>
 </div>
 {% endblock %}
