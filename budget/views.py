@@ -1,12 +1,13 @@
 import json
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from budget.admin import SourcesAdmin
 
-from .models import Sources, Savings
+from .models import Source, Saving, Transaction
 from .forms import SourceForm, SavingForm
 
 # Index
@@ -25,9 +26,8 @@ def wallet(request):
 @login_required(login_url='login')
 def sources_list(request):
     user = request.user
-    user_wallet = user.wallet
 
-    context = {'sources': user_wallet.sources_set.all()}
+    context = {'sources': Source.objects.filter(wallet=user.wallet)}
     return render(request, 'budget/source_list.html', context)
 
 # Sources
@@ -57,7 +57,7 @@ def add_source(request):
 @login_required(login_url='login')
 @transaction.non_atomic_requests
 def edit_source(request, id):
-    source = get_object_or_404(Sources, pk=id)
+    source = get_object_or_404(Source, pk=id)
     old_title = source.title
     if request.method == 'POST':
         form = SourceForm(request.POST, instance=source)
@@ -81,7 +81,7 @@ def edit_source(request, id):
 @login_required(login_url='login')
 @transaction.non_atomic_requests
 def delete_source(request, id):
-    source = get_object_or_404(Sources, pk=id)
+    source = get_object_or_404(Source, pk=id)
     source.delete()
     return HttpResponse(
         status=204,
@@ -98,8 +98,16 @@ def savings_list(request):
     user = request.user
     user_wallet = user.wallet
 
-    context = {'savings': user_wallet.savings_set.all()}
+    context = {'savings': Saving.objects.filter(wallet=user.wallet)}
     return render(request, 'budget/saving_list.html', context)
+
+@login_required(login_url='login')
+@transaction.non_atomic_requests
+def get_saving(request, id):
+    saving = get_object_or_404(Saving, pk=id)
+    return render(request, 'budget/saving.html', {
+        'saving': saving
+    })
 
 @login_required(login_url='login')
 @transaction.non_atomic_requests
@@ -127,7 +135,7 @@ def add_saving(request):
 @login_required(login_url='login')
 @transaction.non_atomic_requests
 def edit_saving(request, id):
-    saving = get_object_or_404(Savings, pk=id)
+    saving = get_object_or_404(Saving, pk=id)
     current_title = saving.title
     if request.method == 'POST':
         form = SavingForm(request.POST, instance=saving)
@@ -151,7 +159,7 @@ def edit_saving(request, id):
 @login_required(login_url='login')
 @transaction.non_atomic_requests
 def delete_saving(request, id):
-    saving = get_object_or_404(Savings, pk=id)
+    saving = get_object_or_404(Saving, pk=id)
     saving.delete()
     return HttpResponse(
         status=204,
@@ -161,3 +169,15 @@ def delete_saving(request, id):
                 "showMessage": f"Saving {saving.title} was deleted."
             })
         })
+
+# Transactions
+# Savings
+@login_required(login_url='login')
+@transaction.non_atomic_requests
+def get_saving_transactions(request, id):
+    saving = get_object_or_404(Saving, pk=id)
+    transactions = Transaction.objects.filter(Q(target=saving) | Q(source=saving))
+
+    return render(request, 'budget/transactions.html', {
+        'transactions': transactions
+    })

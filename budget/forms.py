@@ -1,15 +1,15 @@
 from django.forms import ModelForm
 
-from .models import Sources, Savings
+from .models import Source, Saving
 
 class SourceForm(ModelForm):
     class Meta:
-        model = Sources
+        model = Source
         fields = ['title']
 
 class SavingForm(ModelForm):
     class Meta:
-        model = Savings
+        model = Saving
         fields = [
             'title',
             'amount',
