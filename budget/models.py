@@ -34,7 +34,7 @@ class Wallet(models.Model):
     def __str__(self) -> str:
         return self.owner.email
 
-class  Sources(models.Model):
+class Bucket(models.Model):
     wallet = models.ForeignKey(
         Wallet,
         null=False,
@@ -53,24 +53,35 @@ class  Sources(models.Model):
     def __str__(self) -> str:
         return str(self.wallet)+'-'+str(self.title)
 
-class Savings(models.Model):
-    wallet = models.ForeignKey(
-        Wallet,
+class Source(Bucket):
+    plan = models.FloatField(default=0)
+
+class Saving(Bucket):
+    pass
+
+class Expense(Bucket):
+    limit = models.FloatField()
+
+class Transaction(models.Model):
+    date = models.DateTimeField(
+        default=timezone.now,
         null=False,
-        blank=False,
+        blank=False
+    )
+    source = models.ForeignKey(
+        Bucket,
+        related_name='source_transaction',
         on_delete=models.PROTECT
     )
-    title = models.CharField(max_length=250, blank=False)
-    amount = models.FloatField(default=0)
-    created_at = models.DateField(default=timezone.now)
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self) -> str:
-        return str(self.wallet)+'-'+str(self.title)
-
-class Costs(models.Model):
-    title = models.CharField(max_length=250, blank=False)
-    amount = models.FloatField()
-    limit = models.FloatField()
-    created_at = models.DateField()
-    is_active = models.BooleanField(default=True)
+    target = models.ForeignKey(
+        Bucket,
+        related_name='target',
+        on_delete=models.PROTECT
+    )
+    amount = models.FloatField(
+        blank=False,
+        null=False
+    )
+    comment = models.TextField(
+        blank=True
+    )

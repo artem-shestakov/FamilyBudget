@@ -8,7 +8,10 @@
             <div class="card-container">
                 <div class="saving">
                     <div class="image saving" id="{{ saving.pk }}" draggable="true">
-                        <img id="{{ saving.pk }}" src="{% static 'icons/account_balance_wallet_black_24dp.svg' %}" alt="{{ saving.title }}" width="100px" hx-get="{% url 'edit_saving' id=saving.pk %}" hx-trigger="click" hx-target="#savingAddDialog">
+                        {% comment %} <img id="{{ saving.pk }}" src="{% static 'icons/account_balance_wallet_black_24dp.svg' %}" alt="{{ saving.title }}" width="100px" hx-get="{% url 'edit_saving' id=saving.pk %}" hx-trigger="click" hx-target="#savingAddDialog"> {% endcomment %}
+                        <a href="{% url 'get_saving' id=saving.pk %}">
+                        <img id="{{ saving.pk }}" src="{% static 'icons/account_balance_wallet_black_24dp.svg' %}" alt="{{ saving.title }}" width="100px">
+                        </a>
                     </div>
                     <div class="title">{{ saving.title }}</div>
                     <div class="total">{{ saving.amount }}</div>
